@@ -6,4 +6,8 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi[standard]>=0.116.1",
+    "r2r-bo",
 ]
+
+[tool.uv.sources]
+r2r-bo = { path = "../r2r-bo" }

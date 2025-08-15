@@ -1,0 +1,14 @@
+.
+├── dependencies.py
+├── main.py
+├── models.py
+├── pyproject.toml
+├── README.md
+├── routers
+│   ├── __init__.py
+│   └── routes.py
+├── services.py
+├── tree.txt
+└── uv.lock
+
+2 directories, 10 files
