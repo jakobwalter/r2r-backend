@@ -1,0 +1,353 @@
+{
+  "distance_influence": 1.0,
+  "priority": [
+    {
+      "if": "road_environment == FERRY || road_environment == OTHER || bike_road_access == NO || bike_road_access == PRIVATE",
+      "multiply_by": "0.0"
+    },
+    {
+      "if": "bike_road_access == DESTINATION",
+      "multiply_by": "0.3"
+    },
+    {
+      "if": "bike_road_access == USE_SIDEPATH",
+      "multiply_by": "0.35"
+    },
+    {
+      "if": "road_class==STEPS || road_class == PLATFORM",
+      "multiply_by": "0.002"
+    },
+    {
+      "if": "(smoothness == BAD || smoothness == VERY_BAD || smoothness == HORRIBLE || smoothness == VERY_HORRIBLE || smoothness == IMPASSABLE) || (surface == UNPAVED || surface == COMPACTED || surface == FINE_GRAVEL || surface == GRAVEL || surface == GROUND || surface == DIRT || surface == SAND || surface == UNHEWN_COBBLESTONE) || (track_type == GRADE2 || track_type == GRADE3 || track_type == GRADE4 || track_type == GRADE5)",
+      "do": [
+        {
+          "if": "smoothness != MISSING",
+          "do": [
+            {
+              "if": "smoothness == VERY_BAD || smoothness == HORRIBLE || smoothness == VERY_HORRIBLE || smoothness == IMPASSABLE",
+              "multiply_by": "0.1134"
+            },
+            {
+              "if": "smoothness == HORRIBLE || smoothness == VERY_HORRIBLE || smoothness == IMPASSABLE",
+              "multiply_by": "0.063"
+            },
+            {
+              "if": "smoothness == VERY_HORRIBLE || smoothness == IMPASSABLE",
+              "multiply_by": "0.0001"
+            },
+            {
+              "if": "smoothness == IMPASSABLE",
+              "multiply_by": "0.00001"
+            }
+          ]
+        },
+        {
+          "else_if": "surface != MISSING",
+          "do": [
+            {
+              "if": "surface == UNHEWN_COBBLESTONE",
+              "multiply_by": "0.01"
+            },
+            {
+              "if": "surface == UNPAVED",
+              "multiply_by": "0.0563"
+            },
+            {
+              "else_if": "surface == COMPACTED",
+              "multiply_by": "0.155"
+            },
+            {
+              "else_if": "surface == FINE_GRAVEL",
+              "multiply_by": "0.0087"
+            },
+            {
+              "else_if": "surface == GRAVEL",
+              "multiply_by": "0.0158"
+            },
+            {
+              "else_if": "surface == GROUND",
+              "multiply_by": "0.187"
+            },
+            {
+              "else_if": "surface == DIRT",
+              "multiply_by": "0.05"
+            },
+            {
+              "else_if": "surface == SAND",
+              "multiply_by": "0.006"
+            }
+          ]
+        },
+        {
+          "else_if": "track_type != MISSING",
+          "do": [
+            {
+              "if": "track_type == GRADE2 || track_type == GRADE3 || track_type == GRADE4 || track_type == GRADE5",
+              "multiply_by": "0.049"
+            },
+            {
+              "if": "track_type == GRADE3 || track_type == GRADE4 || track_type == GRADE5",
+              "multiply_by": "0.01"
+            },
+            {
+              "if": "track_type == GRADE4 || track_type == GRADE5",
+              "multiply_by": "0.089"
+            },
+            {
+              "if": "track_type == GRADE5",
+              "multiply_by": "0.99"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "else": "",
+      "do": [
+        {
+          "if": "bike_network != MISSING",
+          "multiply_by": "{bike_network_bonus}"
+        },
+        {
+          "if": "near_noise_highway == true",
+          "multiply_by": "{near_noise_highway_penalty}"
+        },
+        {
+          "if": "near_noise_primary == true || near_noise_highway == true",
+          "multiply_by": "{near_noise_primary_penalty}"
+        },
+        {
+          "if": "near_nature_forest == true",
+          "multiply_by": "{near_forest_bonus}"
+        },
+        {
+          "if": "near_water == true",
+          "multiply_by": "{near_water_bonus}"
+        },
+        {
+          "if": "road_class == PRIMARY",
+          "do": [
+            {
+              "if": "near_residential_area == true",
+              "do": [
+                {
+                  "if": "cycleway_infra != MISSING && cycleway_infra != NONE",
+                  "multiply_by": "{primary_city_bike_infra}"
+                },
+                {
+                  "else": "",
+                  "multiply_by": "{primary_city_no_bike_infra}"
+                }
+              ]
+            },
+            {
+              "else": "",
+              "multiply_by": "{primary_country}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == SECONDARY",
+          "do": [
+            {
+              "if": "near_residential_area == true",
+              "multiply_by": "{secondary_city}"
+            },
+            {
+              "else": "",
+              "multiply_by": "{secondary_country}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == TERTIARY",
+          "do": [
+            {
+              "if": "near_residential_area == true",
+              "multiply_by": "{tertiary_city}"
+            },
+            {
+              "else": "",
+              "multiply_by": "{tertiary_country}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == RESIDENTIAL || road_class == LIVING_STREET || road_class == PEDESTRIAN",
+          "do": [
+            {
+              "if": "smoothness == EXCELLENT",
+              "multiply_by": "3.0"
+            },
+            {
+              "else_if": "smoothness == GOOD ||  (smoothness == MISSING && surface == ASPHALT)",
+              "multiply_by": "1.0"
+            },
+            {
+              "else_if": "smoothness == INTERMEDIATE",
+              "multiply_by": "{residential_sm2}"
+            },
+            {
+              "else_if": "smoothness == BAD",
+              "multiply_by": "0.4"
+            },
+            {
+              "else": "",
+              "multiply_by": "{residential_other}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == UNCLASSIFIED",
+          "do": [
+            {
+              "if": "smoothness == EXCELLENT",
+              "multiply_by": "1.15"
+            },
+            {
+              "if": "smoothness == GOOD || smoothness == EXCELLENT",
+              "multiply_by": "{unclassified_sm01}"
+            },
+            {
+              "else_if": "smoothness == MISSING && (surface == ASPHALT || track_type == GRADE1)",
+              "multiply_by": "{unclassified_asphalt}"
+            },
+            {
+              "else": "",
+              "multiply_by": "{unclassified_other}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == SERVICE",
+          "do": [
+            {
+              "if": "smoothness == EXCELLENT",
+              "multiply_by": "1.15"
+            },
+            {
+              "if": "smoothness == GOOD || smoothness == EXCELLENT",
+              "multiply_by": "{service_sm01}"
+            },
+            {
+              "else_if": "smoothness == INTERMEDIATE",
+              "multiply_by": "{service_sm2}"
+            },
+            {
+              "else_if": "smoothness == BAD",
+              "multiply_by": "0.1451"
+            },
+            {
+              "else_if": "smoothness == MISSING && (surface == ASPHALT || track_type == GRADE1)",
+              "multiply_by": "{service_asphalt}"
+            },
+            {
+              "else": "",
+              "multiply_by": "{service_other}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == TRACK",
+          "do": [
+            {
+              "if": "smoothness == EXCELLENT",
+              "multiply_by": "1.15"
+            },
+            {
+              "if": "smoothness == GOOD || smoothness == EXCELLENT",
+              "multiply_by": "{track_sm01}"
+            },
+            {
+              "if": "smoothness == INTERMEDIATE",
+              "multiply_by": "{track_sm2}"
+            },
+            {
+              "if": "smoothness == BAD",
+              "multiply_by": "0.1592"
+            },
+            {
+              "else_if": "smoothness == MISSING && (surface == ASPHALT || track_type == GRADE1)",
+              "multiply_by": "{track_asphalt}"
+            },
+            {
+              "else_if": "smoothness == MISSING && surface == CONCRETE",
+              "multiply_by": "0.2735"
+            },
+            {
+              "else_if": "smoothness == MISSING && surface == PAVED",
+              "multiply_by": "{track_paved}"
+            },
+            {
+              "else": "",
+              "multiply_by": "{track_other}"
+            }
+          ]
+        },
+        {
+          "else_if": "road_class == PATH || road_class == CYCLEWAY || road_class == FOOTWAY",
+          "do": [
+            {
+              "if": "bike_road_access == DESIGNATED || road_class == CYCLEWAY",
+              "do": [
+                {
+                  "if": "smoothness == EXCELLENT",
+                  "multiply_by": "1.15"
+                },
+                {
+                  "if": "smoothness == EXCELLENT || smoothness == GOOD",
+                  "multiply_by": "{bike_path_sm01}"
+                },
+                {
+                  "else_if": "smoothness == MISSING && surface == PAVING_STONES",
+                  "multiply_by": "{bike_path_paving_stones}"
+                },
+                {
+                  "else_if": "smoothness == BAD",
+                  "multiply_by": "0.1451"
+                },
+                {
+                  "else": "",
+                  "multiply_by": "{bike_path_other}"
+                }
+              ]
+            },
+            {
+              "else_if": "bike_road_access == YES",
+              "multiply_by": "{bike_path_yes}"
+            },
+            {
+              "else_if": "bike_road_access == DISMOUNT || (bike_road_access == NO && (foot_road_access == YES || foot_road_access == DESIGNATED))",
+              "multiply_by": "0.005"
+            },
+            {
+              "else": "",
+              "do": [
+                {
+                  "if": "smoothness == EXCELLENT",
+                  "multiply_by": "1.15"
+                },
+                {
+                  "if": "smoothness == GOOD || smoothness == EXCELLENT",
+                  "multiply_by": "{path_other_sm01}"
+                },
+                {
+                  "else_if": "smoothness == MISSING && (surface == ASPHALT || track_type == GRADE1)",
+                  "multiply_by": "{path_other_asphalt}"
+                },
+                {
+                  "else": "",
+                  "multiply_by": "0.0373"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "else": "",
+          "multiply_by": "0.0001"
+        }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 import asyncio
 
 from models import RouteRequest, RouteResponse
-from dependencies import get_graphhopper_config
+from ..app.dependencies import get_graphhopper_config
 from services import get_custom_model, get_route_async
 from r2r_bo.graphhopper.config import GraphHopperConfig
 

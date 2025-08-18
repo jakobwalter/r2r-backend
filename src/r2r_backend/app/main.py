@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import routes
+from ..routers import routes
 
 app = FastAPI(title="GraphHopper Proxy API", version="1.0.0")
 

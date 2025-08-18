@@ -100,7 +100,9 @@ class ProfilePrior(Base):
     profile_id = Column(Integer, ForeignKey("graphhopper_custom_profiles.id"), nullable=False)
 
     # Prior parameters as key-value pairs
-    parameters = Column(JSONB, nullable=False)  # {"param1": 1.5, "param2": 0.8, ...}
+    means = Column(JSONB, nullable=False)  # {"param1": 1.5, "param2": 0.8, ...}
+    variances = Column(JSONB, nullable=False)  # {"param1": 0.01, "param2": 0.01, ...}
+
 
     # Metadata about how these priors were learned
     training_metadata = Column(JSONB)  # {"routes_used": 100, "convergence_metric": 0.95, ...}

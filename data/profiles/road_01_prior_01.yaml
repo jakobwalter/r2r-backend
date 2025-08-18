@@ -1,0 +1,44 @@
+# Prior configuration for GraphHopper Custom Profile
+# Profile: road_01 (ID: 2)
+# Description: Basic road profile optimized for paved surfaces
+# Generated for version: 1
+
+custom_profile_id: 2
+version: 1
+parameters:
+  bike_network_bonus: 1.365
+  bike_path_other: 1.253
+  bike_path_paving_stones: 0.6526
+  bike_path_sm01: 1.27
+  bike_path_yes: 1.358
+  near_forest_bonus: 1.512
+  near_noise_highway_penalty: 0.8776
+  near_noise_primary_penalty: 0.7835
+  near_water_bonus: 1.35
+  path_other_asphalt: 0.307
+  path_other_sm01: 0.2
+  primary_city_bike_infra: 1.056
+  primary_city_no_bike_infra: 1.162
+  primary_country: 0.4822
+  residential_other: 0.9328
+  residential_sm2: 0.6303
+  secondary_city: 0.7268
+  secondary_country: 0.7394
+  service_asphalt: 2.033
+  service_other: 1.137
+  service_sm01: 5.396
+  service_sm2: 1.834
+  tertiary_city: 0.912
+  tertiary_country: 0.8891
+  track_asphalt: 0.679
+  track_other: 0.4082
+  track_paved: 0.8797
+  track_sm01: 1.831
+  track_sm2: 1.5
+  unclassified_asphalt: 1.625
+  unclassified_other: 1.18
+  unclassified_sm01: 5.021
+training_metadata:
+  routes_used: null
+  convergence_metric: null
+  notes: Manually configured priors

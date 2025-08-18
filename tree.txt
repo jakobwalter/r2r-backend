@@ -1,14 +1,32 @@
 .
-├── dependencies.py
-├── main.py
+├── alembic
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions
+│       └── f44c8b1fa365_initial_schema_with_profiles_and_ratings.py
+├── alembic.ini
 ├── models.py
 ├── pyproject.toml
 ├── README.md
-├── routers
-│   ├── __init__.py
-│   └── routes.py
+├── scripts
+│   └── test_connection.py
 ├── services.py
+├── src
+│   ├── r2r_backend
+│   │   ├── app
+│   │   │   ├── dependencies.py
+│   │   │   ├── __init__.py
+│   │   │   └── main.py
+│   │   ├── db
+│   │   │   ├── base.py
+│   │   │   ├── __init__.py
+│   │   │   └── models.py
+│   │   └── __init__.py
+│   └── routers
+│       ├── __init__.py
+│       └── routes.py
 ├── tree.txt
 └── uv.lock
 
-2 directories, 10 files
+9 directories, 21 files
